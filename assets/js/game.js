@@ -9,7 +9,7 @@ var playerMoney = 10;
 //enemy stats
 
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
-var enemyHealth = 15;
+var enemyHealth = 12;
 var enemyAttack = 12;
 
 //Fight function
@@ -88,9 +88,13 @@ var fight = function(enemyName) {
   
         var pickedEnemyName = enemyNames[i];
   
-        enemyHealth = 50;
+        enemyHealth = 12;
   
         fight(pickedEnemyName);
+        //if we're not at the last enemy in the array
+        if(playerHealth > 0 && i < enemyNames.length - 1){
+          shop();
+        }
       }
       else {
         window.alert("You have lost your robot in battle! Game Over!");
@@ -134,5 +138,47 @@ var fight = function(enemyName) {
     //if upgrade attack, subtract money points and add attack points
     //if leave, alert goodbye and exit the function
     //if any other invalid option, call the shop() again
+
+    var shop = function(){
+      var shopOptionPrompt = prompt(
+      "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+      )
+      //use switch to carry out an action
+      switch(shopOptionPrompt){
+        case "REFILL":
+        case "refill":
+          if (playerMoney >= 7){
+          alert("Refilling player's health by 20 for 7 dollars.")
+          //increase health and decress money
+          playerHealth = playerHealth + 20
+          playerMoney = playerMoney - 7
+          }
+          else{
+            alert("You do not have enough money!")
+          }
+          break;
+          case "UPGRADE":
+          case "upgrade":
+            if (playerMoney >= 7){
+            alert("Upgrade player attack by 6 for 7 dollars.")
+            playerAttack = playerAttack + 6
+            playerMoney = playerMoney - 7
+            }
+            else{
+              prompt("You do not have enough money!")
+            }
+            break;
+
+            case "LEAVE":
+            case "leave":
+              alert("Leaving the store")
+              break;
+
+              default:
+                alert("You did not pick a valid option. Try again.")
+                shop();
+                break;
+      }
+    };
 
     startGame();
